@@ -144,7 +144,7 @@ dedent_closing_brackets = True
 # i18n_function_call=
 
 # Indent blank lines.
-indent_blank_lines = True
+indent_blank_lines = False
 
 # Put closing brackets on a separate line, indented, if the bracketed
 # expression can't fit in a single line. Applies to all kinds of brackets,
