@@ -1,6 +1,7 @@
 import pygame
 from support import import_folder
 
+
 class Player(pygame.sprite.Sprite):
 	def __init__(self, pos, surface, create_jump_particles):
 		super().__init__()

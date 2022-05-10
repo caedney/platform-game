@@ -1,6 +1,7 @@
 import pygame
 from support import import_folder
 
+
 class Particles(pygame.sprite.Sprite):
 	def __init__(self, pos, type):
 		super().__init__()

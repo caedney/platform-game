@@ -4,6 +4,7 @@ from tiles import Tile
 from player import Player
 from settings import tile_size, screen_width
 
+
 class Level:
 	def __init__(self, level_data, surface):
 		# Level setup
