@@ -44,11 +44,11 @@ based_on_style = pep8
 
 # Number of blank lines surrounding top-level function and class
 # definitions.
-blank_lines_around_top_level_definition = 1
+blank_lines_around_top_level_definition = 2
 
 # Number of blank lines between top-level imports and variable
 # definitions.
-# blank_lines_between_top_level_imports_and_variables=1
+# blank_lines_between_top_level_imports_and_variables = 1
 
 # Insert a blank line before a class-level docstring.
 # blank_line_before_class_docstring=False
