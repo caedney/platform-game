@@ -10,13 +10,13 @@ clock = pygame.time.Clock()
 level = Level(level_0, screen)
 
 while True:
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			pygame.quit()
-			sys.exit()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
-	screen.fill('grey')
-	level.run()
+    screen.fill('grey')
+    level.run()
 
-	pygame.display.update()
-	clock.tick(60)
+    pygame.display.update()
+    clock.tick(60)
