@@ -8,14 +8,21 @@ from water import Water
 from clouds import Clouds
 from player import Player
 from particles import Particles
+from game_data import levels
 
 
 class Level:
-    def __init__(self, level_data, surface):
+    def __init__(self, current_level, surface, create_overworld):
         # Gereral setup
         self.display_surface = surface
         self.world_shift = 0
         self.current_x = 0
+
+        # Overworld connection
+        self.create_overworld = create_overworld
+        self.current_level = current_level
+        level_data = levels[self.current_level]
+        self.new_max_level = level_data['unlock']
 
         # Player setup
         player_layout = import_csv(level_data['player'])
@@ -224,6 +231,14 @@ class Level:
         if player.on_ceiling and player.direction.y > 0:
             player.on_ceiling = False
 
+    def check_death(self):
+        if self.player.sprite.rect.top > screen_height:
+            self.create_overworld(self.current_level, 0)
+
+    def check_win(self):
+        if pygame.sprite.spritecollide(self.player.sprite, self.goal, False):
+            self.create_overworld(self.current_level, self.new_max_level)
+
     def run(self):
         # Sky
         self.sky.draw(self.display_surface)
@@ -273,6 +288,9 @@ class Level:
         self.player.draw(self.display_surface)
         self.goal.update(self.world_shift)
         self.goal.draw(self.display_surface)
+
+        self.check_death()
+        self.check_win()
 
         # Water
         self.water.draw(self.display_surface, self.world_shift)
