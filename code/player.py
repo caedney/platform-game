@@ -13,6 +13,12 @@ class Player(pygame.sprite.Sprite):
         self.image = self.animations['idle'][self.frame_index]
         self.rect = self.image.get_rect(topleft = pos)
 
+        # Audio
+        self.jump_sound = pygame.mixer.Sound('audio/effects/jump.wav')
+        self.jump_sound.set_volume(0.25)
+        self.hit_sound = pygame.mixer.Sound('audio/effects/hit.wav')
+        self.hit_sound.set_volume(0.25)
+
         # Dust particles
         self.import_dust_particles_run()
         self.dust_frame_index = 0
@@ -135,9 +141,11 @@ class Player(pygame.sprite.Sprite):
 
     def jump(self):
         self.direction.y = self.jump_speed
+        self.jump_sound.play()
 
     def get_damage(self):
         if not self.invincible:
+            self.hit_sound.play()
             self.update_health(self.reduce_health)
             self.invincible = True
             self.hurt_time = pygame.time.get_ticks()
