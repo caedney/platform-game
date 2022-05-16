@@ -25,6 +25,7 @@ class Player(pygame.sprite.Sprite):
         self.speed = 8
         self.gravity = 0.8
         self.jump_speed = -16
+        self.collision_rect = pygame.Rect(self.rect.topleft, (50, self.rect.height))
 
         # Player status
         self.status = 'idle'
@@ -70,9 +71,11 @@ class Player(pygame.sprite.Sprite):
 
         if self.facing_right:
             self.image = image
+            self.rect.bottomleft = self.collision_rect.bottomleft
         else:
             flipped_image = pygame.transform.flip(image, True, False)
             self.image = flipped_image
+            self.rect.bottomright = self.collision_rect.bottomright
 
         if self.invincible:
             alpha = self.wave_value()
@@ -80,19 +83,7 @@ class Player(pygame.sprite.Sprite):
         else:
             self.image.set_alpha(255)
 
-        # Set the rectangle
-        if self.on_floor and self.on_right:
-            self.rect = self.image.get_rect(bottomright = self.rect.bottomright)
-        elif self.on_floor and self.on_left:
-            self.rect = self.image.get_rect(bottomleft = self.rect.bottomleft)
-        elif self.on_floor:
-            self.rect = self.image.get_rect(midbottom = self.rect.midbottom)
-        elif self.on_ceiling and self.on_right:
-            self.rect = self.image.get_rect(topright = self.rect.topright)
-        elif self.on_ceiling and self.on_left:
-            self.rect = self.image.get_rect(topleft = self.rect.topleft)
-        elif self.on_ceiling:
-            self.rect = self.image.get_rect(midtop = self.rect.midtop)
+        self.rect = self.image.get_rect(midbottom = self.rect.midbottom)
 
     def dust_animation_run(self):
         if self.status == 'run' and self.on_floor:
@@ -140,7 +131,7 @@ class Player(pygame.sprite.Sprite):
 
     def apply_gravity(self):
         self.direction.y += self.gravity
-        self.rect.y += self.direction.y
+        self.collision_rect.y += self.direction.y
 
     def jump(self):
         self.direction.y = self.jump_speed
